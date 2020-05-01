@@ -1,26 +1,30 @@
-class User {
-    constructor(name, email) {
+  function User(name, email)  {
       // this key word is out object {}
       this.name = name;
       this.email = email;
-    }
-    // add methods to prototype of User object
-    login() {
-      console.log(`${this.name} just logged in`);
-    }
-  
-    logout() {
-      console.log(`${this.name} just logged out`);
-    }
   }
-  
-  class Admin extends User {
-    deleteUser(user) {
-      users = users.filter(u => u.email !== user.email);
-    }
-    addUser(name, email) {
-      users.push(new User(name, email));
-    }
+
+  User.prototype.login = function() {
+    console.log(`${this.name} just logged in`);
+  }
+
+  User.prototype.logout = function() {
+    console.log(`${this.name} just logged out`);
+  }
+
+function Admin(...args) {
+    User.apply(this, args)  
+  }
+
+  Admin.prototype = Object.create(User.prototype)
+
+  Admin.prototype.deleteUser = function(user) {
+    users = users.filter(u => u.email !== user.email);
+  }
+
+  Admin.prototype.addUser = function(name, email) {
+    users.push(new User(name, email));
+
   }
   
   const Vlad = new Admin("Vlad", "americanman");
@@ -31,6 +35,6 @@ class User {
   
   console.log(Vlad.login());
   
-  Vlad.deleteUser(paul);
+  Vlad.deleteUser(badGuy);
   Vlad.addUser("Mike", "Dimmit");
   console.log("users", users);
